@@ -1,0 +1,27 @@
+{% block header %}
+     <h1>{% block title %}Buy{% endblock %}</h1>
+     <h2> Cars for Sale! </h2>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label>Price Under </label>
+        <input type="number" name="price" id="price" required>
+        <input type="submit" value="Search">
+    </form>
+    {% for row in head_rows %}
+        <article class="post">
+        <header>
+            <div>
+            <h1>{{ row['manufacturer'] }} | {{ '{0:.0f}'.format(row['year']) }} {{ row['model'] }}</h1>
+            <h3>${{ row['price'] }} / {{ row['condition'] }} condition </h3>
+            </div>
+        </header>
+        
+        <p class="body">{{ row['description'] }}</p>
+        </article>
+        {% if not loop.last %}
+        <hr>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
