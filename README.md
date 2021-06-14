@@ -3,6 +3,7 @@
 1. Open the command line and cd to this directory.
 
 2. Create a virtual environment.
+	
 	On Unix:
 	```
 	python3 -m venv venv
@@ -22,6 +23,7 @@
 	```
 
 4. Set environment variables and run. 
+	
 	On Unix:
 	```
 	export FLASK_APP=app
