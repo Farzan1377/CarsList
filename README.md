@@ -4,26 +4,36 @@
 
 2. Create a virtual environment.
 	On Unix:
-	$ python3 -m venv venv
-	$ . venv/bin/activate
+	```
+	python3 -m venv venv
+	. venv/bin/activate
+	```
 	On Windows:
-	> py -3 -m venv venv
-	> venv\Scripts\activate
+	```
+	py -3 -m venv venv
+	venv\Scripts\activate
+	```
 
 3. Install dependencies:
+	```
 	pip install Flask
 	pip install MySQL
 	pip install MySQL-connector
+	```
 
 4. Set environment variables and run. 
 	On Unix:
-	$ export FLASK_APP=app
-	$ export FLASK_ENV=development
-	$ flask run
+	```
+	export FLASK_APP=app
+	export FLASK_ENV=development
+	flask run
+	```
   	On Windows:
-	> set FLASK_APP=app
-	> set FLASK_ENV=development
-	> flask run
+	```
+	set FLASK_APP=app
+	set FLASK_ENV=development
+	flask run
+	```
 	    
 5. Open your internet browser and go to 'http://localhost:5000/shop/buy'.
 
