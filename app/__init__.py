@@ -25,6 +25,8 @@ def create_app(test_config=None):
     db.init_app(app)
 
     from . import shop
+    from . import vehicles
     app.register_blueprint(shop.bp)
+    app.register_blueprint(vehicles.bp)
 
     return app
