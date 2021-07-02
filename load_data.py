@@ -22,27 +22,29 @@ CREATE_USER_TABLE = "CREATE TABLE users (" \
 CREATE_VEHICLE_TABLE = "CREATE TABLE vehicles (" \
                        "vehicle_id VARCHAR(255) NOT NULL, " \
                        "user_id VARCHAR(255) NOT NULL, " \
-                       "year INT, " \
                        "manufacturer VARCHAR(255), " \
                        "model VARCHAR(255), " \
+                       "year INT, " \
+                       "type VARCHAR(255), " \
                        "vehicle_condition VARCHAR(255), " \
                        "odometer INT, " \
-                       "type VARCHAR(255), " \
                        "paint_color VARCHAR(255), " \
                        "image_url VARCHAR(255), " \
                        "description TEXT, " \
                        "PRIMARY KEY (vehicle_id), " \
-                       "FOREIGN KEY (user_id) REFERENCES Users(user_id)" \
+                       "FOREIGN KEY (user_id) REFERENCES users(user_id)" \
                        ");"
 
 CREATE_POST_TABLE = "CREATE TABLE posts (" \
                     "post_id INT NOT NULL, " \
+                    "user_id VARCHAR(255) NOT NULL, " \
                     "vehicle_id VARCHAR(255) NOT NULL, " \
                     "price INT, " \
                     "date_created VARCHAR(255), " \
                     "date_expires VARCHAR(255), " \
                     "PRIMARY KEY (post_id), " \
-                    "FOREIGN KEY (vehicle_id) REFERENCES Vehicles(vehicle_id)" \
+                    "FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id), " \
+                    "FOREIGN KEY (user_id) REFERENCES users(user_id)" \
                     ");"
 
 print("Connecting to MySQL...")
