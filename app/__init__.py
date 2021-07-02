@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 
+
 def create_app(test_config=None):
     # Create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -26,7 +27,9 @@ def create_app(test_config=None):
 
     from . import shop
     from . import vehicles
+    from . import search
     app.register_blueprint(shop.bp)
     app.register_blueprint(vehicles.bp)
+    app.register_blueprint(search.bp)
 
     return app
