@@ -32,7 +32,7 @@ CREATE_VEHICLE_TABLE = "CREATE TABLE vehicles (" \
                        "image_url VARCHAR(255), " \
                        "description TEXT, " \
                        "PRIMARY KEY (vehicle_id), " \
-                       "FOREIGN KEY (user_id) REFERENCES users(user_id)" \
+                       "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE" \
                        ");"
 
 CREATE_POST_TABLE = "CREATE TABLE posts (" \
@@ -43,8 +43,8 @@ CREATE_POST_TABLE = "CREATE TABLE posts (" \
                     "date_created VARCHAR(255), " \
                     "date_expires VARCHAR(255), " \
                     "PRIMARY KEY (post_id), " \
-                    "FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id), " \
-                    "FOREIGN KEY (user_id) REFERENCES users(user_id)" \
+                    "FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id) ON DELETE CASCADE, " \
+                    "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE" \
                     ");"
 
 print("Connecting to MySQL...")
