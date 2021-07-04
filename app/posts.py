@@ -15,12 +15,12 @@ def create_post():
     
     print('Attempting to create post...')
     post_request = request.form
-    post_id = vehicle_request["post_id"] if "post_id" in post_request else ""
-    user_id = vehicle_request["user_id"] if "user_id" in post_request else ""
-    vehicle_id = vehicle_request["vehicle_id"] if "vehicle_id" in post_request else ""
-    price = vehicle_request["price"] if "price" in post_request else ""
-    date_created = vehicle_request["date_created"] if "date_created" in post_request else ""
-    date_expires = vehicle_request["date_expires"] if "date_expires" in post_request else ""
+    post_id = post_request["post_id"] if "post_id" in post_request else ""
+    user_id = post_request["user_id"] if "user_id" in post_request else ""
+    vehicle_id = post_request["vehicle_id"] if "vehicle_id" in post_request else ""
+    price = post_request["price"] if "price" in post_request else ""
+    date_created = post_request["date_created"] if "date_created" in post_request else ""
+    date_expires = post_request["date_expires"] if "date_expires" in post_request else ""
 
     cursor = get_db().cursor()
     before_row_count = cursor.rowcount
