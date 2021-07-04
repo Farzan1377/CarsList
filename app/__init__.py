@@ -31,5 +31,6 @@ def create_app(test_config=None):
     app.register_blueprint(shop.bp)
     app.register_blueprint(vehicles.bp)
     app.register_blueprint(search.bp)
+    app.register_blueprint(posts.bp)
 
     return app
