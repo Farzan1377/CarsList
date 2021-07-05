@@ -93,8 +93,7 @@ def update_post():
 def show_post():
     print(request)
     if request.method != 'GET':
-        jsonify(({"error": "Did not show post. Not a GET request."}))
-        return
+        return jsonify(({"error": "Did not show post. Not a GET request."}))
 
     post_request = request.form
     if 'post_id' not in post_request:

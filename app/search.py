@@ -11,10 +11,6 @@ SELECT_VEHICLE_BASE_QUERY = "SELECT posts.vehicle_id, posts.user_id, post_id, ma
                             "INNER JOIN users ON posts.user_id = users.user_id"
 
 
-# Calling this endpoint requires form data (a dictionary) in the request body
-# The manufacturer, price_low, and price_high keys must exist regardless of whether they have values or not
-# Returns a JSON dictionary with key "data" set to a list of vehicle information made my "manufacturer" and having
-# price <= "price_high" and >= "price_low"
 @bp.route('/select_vehicles', methods=['GET'])
 def select_vehicles():
     if request.method == 'GET':
@@ -40,17 +36,15 @@ def select_vehicles():
         return jsonify({"data": data})
 
 
-# Calling this endpoint requires form data (a dictionary) in the request body
-# "manufacturer" must be present as a key in the request body, set to the manufacturer name
-# Returns a JSON dictionary with key "average_price" set to the average price of the given manufacturer
-# If there was an error, will return a dictionary with key "error" set to the error message
 @bp.route('/get_manufacturer_average_price', methods=['GET'])
 def get_manufacturer_average_price():
     if request.method == 'GET':
         get_request = request.form
         cursor = get_db().cursor()
         if 'manufacturer' not in get_request:
-            return jsonify({'error': 'manufacturer not specified'})
+            response = jsonify({'error': 'manufacturer not specified'})
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            return response
         manufacturer = get_request['manufacturer']
         if not manufacturer:
             return jsonify({'error': 'manufacturer not specified'})
@@ -63,3 +57,10 @@ def get_manufacturer_average_price():
             return jsonify({'error': 'manufacturer not found'})
         average_price = rows[0][0]
         return jsonify({"average_price": str(average_price)})
+
+
+@bp.after_request
+def apply_allow_origin(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    return response

@@ -20,4 +20,10 @@ def buy():
     head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
 
     return render_template('shop/buy.html', head_rows=head_rows)
-    
+
+
+@bp.after_request
+def apply_allow_origin(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    return response
