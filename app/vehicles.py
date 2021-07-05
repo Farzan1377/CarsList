@@ -2,7 +2,7 @@ import functools
 from flask import Blueprint, g, request, render_template, jsonify
 from app.db import get_db
 
-bp = Blueprint('profile', __name__, url_prefix='/profile')
+bp = Blueprint('vehicles', __name__, url_prefix='/vehicles')
 
 
 @bp.route('/get_user_vehicles', methods=['GET'])
@@ -158,7 +158,7 @@ def update_user_vehicle():
     return jsonify({"Success": "vehicle successfully created"})
 
 
-@bp.route('/user_posts', methods=('GET', 'POST', 'DELETE'))
+@bp.route('/user_posts', methods=['GET', 'POST', 'DELETE'])
 def post():
     print(request)
     if request.method == 'GET':
@@ -183,7 +183,7 @@ def post():
     return render_template('shop/buy.html', head_rows=head_rows)
 
 
-@bp.route('/recent_vehicles', methods=('GET'))
+@bp.route('/recent_vehicles', methods=['GET'])
 def recent_vehicles():
     print(request)
     if request.method != 'GET':
