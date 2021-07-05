@@ -115,5 +115,5 @@ def show_post():
 @bp.after_request
 def apply_allow_origin(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'GET, PUT, POST, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = '*'
     return response
