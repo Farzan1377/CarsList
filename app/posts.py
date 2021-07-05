@@ -87,3 +87,26 @@ def update_post():
     get_db().commit()
     cursor.close()
     return jsonify({"Success": "post successfully created"})
+
+
+@bp.route('/show_post', methods=['GET'])
+def show_post():
+    print(request)
+    if request.method != 'GET':
+        jsonify(({"error": "Did not show post. Not a GET request."}))
+        return
+
+    post_request = request.form
+    if 'post_id' not in post_request:
+        return jsonify({'error': 'post_id key not specified'})
+        
+    post_id = post_request['post_id']
+    if not post_id:
+        return jsonify({'error': 'post_id value not specified'})
+
+    cursor = get_db().cursor()
+    cursor.execute("SELECT * FROM posts where post_id = %s", (post_id,))
+    columns = [col[0] for col in cursor.description]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
+
+    return jsonify({"success": head_rows})
