@@ -110,3 +110,9 @@ def show_post():
     head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
 
     return jsonify({"success": head_rows})
+
+
+@bp.after_request
+def apply_allow_origin(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
