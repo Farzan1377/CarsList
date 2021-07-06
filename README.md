@@ -47,12 +47,13 @@ Also note that the username and password are hardcoded in `app/db.py`
 2. Run 'npm start'. The website should go live at http://localhost:3000/
 Note: The front-end is not calling the backend APIs yet. The styling and API calls will be done in the following days.
 
-# How to get the database set up
+# Initializing the Database
 
 1. In the load_data.py file, add your mysql username and password to the corresponding fields.
 2. Run the file by using the command python3 load_data.py.
 	- This file will generate database called CS348 and also the user, post and vehicle tables. These tables will be populated with data as well.
 	- Ensure that userData.csv and vehiclesWithUserAdded.csv are in the same directory.
+3. Run the SQL commands contained in the file insert_posts.sql to initialize the posts table.
 
 
 # Features implemented so far
