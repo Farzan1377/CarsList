@@ -1,0 +1,102 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+}
+
+.navItems {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
+.Postings {
+  width: 100vw;
+  height: 100vh;
+  
+}
+
+.SinglePost {
+  background-color: orange; 
+}
+
+.Post {
+  background-color: red;
+  width: 100px;
+  height: 100px;
+}
+
+.PostImage {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.SearchArea {
+  background-color: orange;
+  height: 100px;
+}
+
+.SearchBar {
+    height: 50px;
+    border-radius: 15px;
+    border-width: 0px;
+    width: 400px;
+    padding-left: 15px;
+    margin-bottom: -30px;
+    box-shadow: 0 4px 2px -2px #f0f0f0;
+}
+
+.ProfilePicContainer {
+  
+}
+
+.ProfilePic {
+  width: 60px;
+  border-radius: 25px;
+}
+
+.CompanyLogo {
+  width: 200px;
+}
