@@ -36,8 +36,6 @@
 	set FLASK_ENV=development
 	flask run
 	```
-	    
-5. Open your internet browser and go to 'http://localhost:5000/shop/buy'.
 
 Note: 
 This application will not initialize the MySQL database. 
