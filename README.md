@@ -51,10 +51,10 @@ Note: The front-end is not calling the backend APIs yet. The styling and API cal
 
 # How to get the database set up
 
-1. In the load_data.py file, add your mysql username and password to the corresponding fields
-2. Run the file by using the command python3 load_data.py
-	- This file will generate database called CS348 and also the user, post and vehicle tables. These tables will be populate with data 	      as well.
-	- Ensure that userData.csv and vehiclesWithUserAdded.csv are in the same directory
+1. In the load_data.py file, add your mysql username and password to the corresponding fields.
+2. Run the file by using the command python3 load_data.py.
+	- This file will generate database called CS348 and also the user, post and vehicle tables. These tables will be populated with data as well.
+	- Ensure that userData.csv and vehiclesWithUserAdded.csv are in the same directory.
 
 
 # Features implemented so far
