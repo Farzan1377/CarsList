@@ -43,3 +43,8 @@ Note:
 This application will not initialize the MySQL database. 
 The MySQL database must be initialized with data beforehand.
 Also note that the username and password are hardcoded in `app/db.py`
+
+# How to get front-end of the application running
+1. Cd into the frontend directory.
+2. Run 'npm start'. The website should go live at http://localhost:3000/
+Note: The front-end is not calling the backend APIs yet. The styling and API calls will be done in the following days.
