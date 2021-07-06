@@ -8,10 +8,7 @@ bp = Blueprint('vehicles', __name__, url_prefix='/vehicles')
 @bp.route('/get_user_vehicles', methods=['GET'])
 def get_user_vehicles():
     if request.method == 'GET':
-        vehicle_request = request.form
-        if 'user_id' not in vehicle_request:
-            return jsonify({'error': 'user_id key not specified'})
-        user_id = vehicle_request['user_id']
+        user_id = request.args.get('user_id')
         if not user_id:
             return jsonify({'error': 'user_id value not specified'})
         cursor = get_db().cursor()
@@ -22,27 +19,23 @@ def get_user_vehicles():
         return jsonify({"success": head_rows})
 
 
-@bp.route('/delete_user_vehicles', methods=['DELETE'])
+@bp.route('/delete_user_vehicles', methods=['GET'])
 def delete_user_vehicle():
-    vehicle_request = request.form
-    if 'vehicle_id' not in vehicle_request:
-        return jsonify({'error': 'vehicle_id key not specified'})
-
-    vehicle_id = vehicle_request['vehicle_id']
+    vehicle_id = request.args.get('vehicle_id')
     if not vehicle_id:
         return jsonify({'error': 'vehicle_id value not specified'})
-
-    cursor = get_db().cursor()
-    rows = cursor.execute('DELETE from vehicles where vehicle_id = %s', (vehicle_id,))
-
-    if not rows:
-        return jsonify({'error': 'vehicle_id not found'})
-    return jsonify({"success": "vehicle successfully removed"})
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('DELETE from vehicles where vehicle_id = %s', (vehicle_id,))
+    db.commit()
+    return jsonify({"success": "vehicle(s) successfully removed"})
+    
 
 
 @bp.route('/create_user_vehicles', methods=['POST'])
 def create_user_vehicle():
     vehicle_request = request.form
+    print("vehicle_request: ", vehicle_request)
     query_string = ""
     if "vehicle_id" in vehicle_request:
         vehicle_id = vehicle_request["vehicle_id"]
@@ -155,7 +148,7 @@ def update_user_vehicle():
                     vehicle_condition,odometer, paint_color, image_url, description,vehicle_id,))
     get_db().commit()
     cursor.close()
-    return jsonify({"Success": "vehicle successfully created"})
+    return jsonify({"Success": "vehicle successfully updated"})
 
 
 @bp.route('/user_posts', methods=['GET', 'POST', 'DELETE'])
@@ -185,7 +178,6 @@ def post():
 
 @bp.route('/recent_vehicles', methods=['GET'])
 def recent_vehicles():
-    print(request)
     if request.method != 'GET':
         return jsonify(({"error": "Did not get vehicles. Not a GET request."}))
     cursor = get_db().cursor()

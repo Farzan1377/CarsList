@@ -35,26 +35,20 @@ def create_post():
         return jsonify(({"error": "Did not insert post"}))
 
 
-@bp.route('/delete_post', methods=['DELETE'])
+@bp.route('/delete_post', methods=['GET'])
 def delete_post():
-    print(request)
-    if request.method != 'DELETE':
-        jsonify(({"error": "Did not delete post. Not a DELETE request."}))
+    if request.method != 'GET':
+        jsonify(({"error": "Did not delete post. Not a GET request."}))
         return
 
-    post_request = request.form
-    if 'post_id' not in post_request:
-        return jsonify({'error': 'post_id key not specified'})
-
-    post_id = post_request['post_id']
+    post_id = request.args.get('post_id')
     if not post_id:
         return jsonify({'error': 'post_id value not specified'})
 
-    cursor = get_db().cursor()
-    rows = cursor.execute('DELETE from posts where post_id = %s', (post_id,))
-
-    if not rows:
-        return jsonify({'error': 'post_id not found'})
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('DELETE from posts where post_id = %s', (post_id,))
+    db.commit()
     return jsonify({"success": "post successfully removed"})
 
 
@@ -83,23 +77,18 @@ def update_post():
     date_expires = post_request["date_expires"] if "date_expires" in post_request else head_rows[0]["date_expires"]
 
     cursor = get_db().cursor()
-    rows = cursor.execute("UPDATE posts set price = %s, date_expires = %s", (price, date_expires,))
+    rows = cursor.execute("UPDATE posts SET price = %s, date_expires = %s WHERE post_id = %s", (price, date_expires, post_id,))
     get_db().commit()
     cursor.close()
-    return jsonify({"Success": "post successfully created"})
+    return jsonify({"Success": "post successfully updated"})
 
 
 @bp.route('/show_post', methods=['GET'])
 def show_post():
-    print(request)
     if request.method != 'GET':
         return jsonify(({"error": "Did not show post. Not a GET request."}))
-
-    post_request = request.form
-    if 'post_id' not in post_request:
-        return jsonify({'error': 'post_id key not specified'})
-        
-    post_id = post_request['post_id']
+ 
+    post_id = request.args.get('post_id')
     if not post_id:
         return jsonify({'error': 'post_id value not specified'})
 
