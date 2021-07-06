@@ -1,4 +1,4 @@
-# How to get it running
+# Installation
 
 1. Open the command line and cd to this directory.
 
