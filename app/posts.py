@@ -19,13 +19,11 @@ def create_post():
     user_id = post_request["user_id"] if "user_id" in post_request else ""
     vehicle_id = post_request["vehicle_id"] if "vehicle_id" in post_request else ""
     price = post_request["price"] if "price" in post_request else ""
-    date_created = post_request["date_created"] if "date_created" in post_request else ""
-    date_expires = post_request["date_expires"] if "date_expires" in post_request else ""
 
     cursor = get_db().cursor()
     before_row_count = cursor.rowcount
-    rows = cursor.execute("""INSERT into posts values (%s,%s,%s,%s,%s,%s)""",
-                (post_id, user_id, vehicle_id, price, date_created, date_expires,))
+    rows = cursor.execute("""INSERT into posts values (%s,%s,%s,%s)""",
+                (post_id, user_id, vehicle_id, price,))
     after_row_count = cursor.rowcount
     get_db().commit()
     cursor.close()
@@ -97,6 +95,21 @@ def show_post():
     columns = [col[0] for col in cursor.description]
     head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
 
+    return jsonify({"success": head_rows})
+
+
+@bp.route('recent_posts', methods=['GET'])
+def recent_posts():
+    if request.method != 'GET':
+        return jsonify(({"error": "Did not get recent posts. Not a GET request."}))
+
+    cursor = get_db().cursor()
+    cursor.execute(("SELECT post_id, price, date_created, date_expires, b.* " \
+                    "FROM cs348.posts a INNER JOIN cs348.vehicles b ON a.vehicle_id=b.vehicle_id " \
+                    "ORDER BY date_created DESC " \
+                    "LIMIT 50"))
+    columns = [col[0] for col in cursor.description]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
     return jsonify({"success": head_rows})
 
 
