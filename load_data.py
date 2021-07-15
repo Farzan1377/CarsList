@@ -5,8 +5,8 @@ import pymysql
 """userData.csv and vehiclesWithUserAdded.csv need to be copied into the root cs348/ directory for this load script 
 to work"""
 
-USER = '<Enter MySQL username>'
-PASSWORD = '<Enter MySQL password>'
+USER = 'root'
+PASSWORD = ''
 
 CREATE_USER_TABLE = "CREATE TABLE users (" \
                     "user_id VARCHAR(255) NOT NULL, " \
@@ -90,5 +90,10 @@ vehicles_df.dropna(inplace=True)
 vehicles_df.rename(columns={'id': 'vehicle_id', 'login.uuid': 'user_id', 'condition': 'vehicle_condition'},
                    inplace=True)
 vehicles_df.to_sql(name='vehicles', con=engine, schema='cs348', if_exists='append', index=False)
+
+print("Loading posts...")
+engine.execute("INSERT INTO posts VALUES (0, 'c5adf2f0-be01-4bc0-9ec9-17a364b7176e', '7301593436', 3000, '07-02-2021', '08-01-2021')")
+engine.execute("INSERT INTO posts VALUES (1, 'e44bbbd4-e83e-4518-9a5e-225471fd3755', '7301624019', 4000, '07-02-2021', '08-01-2021')")
+engine.execute("INSERT INTO posts VALUES (2, '066829f2-a67d-4b69-94b4-2b2490be8802', '7301630231', 5000, '07-02-2021', '08-01-2021')")
 
 print("Load complete!")
