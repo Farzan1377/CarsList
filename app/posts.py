@@ -66,7 +66,7 @@ def update_post():
         return jsonify({'error': 'post_id value not specified'})
 
     cursor = get_db().cursor()
-    cursor.execute("SELECT * FROM posts where post_id = %s", (post_id,))
+    cursor.execute('SELECT * FROM posts where post_id = %s', (post_id,))
 
     columns = [col[0] for col in cursor.description]
     head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
@@ -86,14 +86,41 @@ def show_post():
     if request.method != 'GET':
         return jsonify(({"error": "Did not show post. Not a GET request."}))
  
+    try:
+        limit = int(request.args.get('limit'))
+    except:
+        limit = 1
+
     post_id = request.args.get('post_id')
     if not post_id:
         return jsonify({'error': 'post_id value not specified'})
 
     cursor = get_db().cursor()
-    cursor.execute("SELECT * FROM posts where post_id = %s", (post_id,))
+    cursor.execute('SELECT * FROM posts where post_id = %s', (post_id,))
     columns = [col[0] for col in cursor.description]
-    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=limit)]
+
+    return jsonify({"success": head_rows})
+
+
+@bp.route('/get_post', methods=['GET'])
+def get_post():
+    if request.method != 'GET':
+        return jsonify(({"error": "Did not get post. Not a GET request."}))
+
+    vehicle_id = request.args.get('vehicle_id')
+    if not vehicle_id:
+        user_id = request.args.get('user_id')
+        if not user_id:
+            return jsonify({'error': 'vehicle_id and user_id value not specified'})
+        cursor = get_db().cursor()
+        cursor.execute('SELECT * FROM posts where user_id = %s', (user_id,))
+    else:
+        cursor = get_db().cursor()
+        cursor.execute('SELECT * FROM posts where vehicle_id = %s', (vehicle_id,))
+
+    columns = [col[0] for col in cursor.description]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany()]
 
     return jsonify({"success": head_rows})
 
@@ -103,13 +130,18 @@ def recent_posts():
     if request.method != 'GET':
         return jsonify(({"error": "Did not get recent posts. Not a GET request."}))
 
+    try:
+        limit = int(request.args.get('limit'))
+    except:
+        limit = 50
+
     cursor = get_db().cursor()
     cursor.execute(("SELECT post_id, price, date_created, date_expires, b.* " \
                     "FROM cs348.posts a INNER JOIN cs348.vehicles b ON a.vehicle_id=b.vehicle_id " \
                     "ORDER BY date_created DESC " \
                     "LIMIT 50"))
     columns = [col[0] for col in cursor.description]
-    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=limit)]
     return jsonify({"success": head_rows})
 
 

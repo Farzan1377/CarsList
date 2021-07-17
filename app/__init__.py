@@ -25,10 +25,12 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    from . import users
     from . import shop
     from . import vehicles
     from . import search
     from . import posts
+    app.register_blueprint(users.bp)
     app.register_blueprint(shop.bp)
     app.register_blueprint(vehicles.bp)
     app.register_blueprint(search.bp)

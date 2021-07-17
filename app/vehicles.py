@@ -96,6 +96,7 @@ def create_user_vehicle():
     else:
         return jsonify(({"error": "Did not insert vehicle"}))
 
+
 @bp.route('/update_user_vehicles', methods=['PUT'])
 def update_user_vehicle():
     vehicle_request = request.form
@@ -169,9 +170,14 @@ def post():
         vehicle_id = request.form['vehicle_id']
         cursor.execute(('DELETE from vehicles where id =vehicle_id'))
 
+    try:        
+        limit = int(request.args.get('limit'))
+    except:
+        limit = 50
+
         # Returns result as a list of dicts
     columns = [col[0] for col in cursor.description]
-    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=limit)]
 
     return render_template('shop/buy.html', head_rows=head_rows)
 
@@ -180,10 +186,16 @@ def post():
 def recent_vehicles():
     if request.method != 'GET':
         return jsonify(({"error": "Did not get vehicles. Not a GET request."}))
+    
+    try:
+        limit = int(request.args.get('limit'))
+    except:
+        limit = 50
+
     cursor = get_db().cursor()
-    cursor.execute(("SELECT * FROM vehicles ORDER BY vehicle_id DESC LIMIT 50"))
+    cursor.execute(("SELECT * FROM vehicles ORDER BY vehicle_id DESC"))
     columns = [col[0] for col in cursor.description]
-    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=limit)]
     return jsonify({"success": head_rows})
 
 
