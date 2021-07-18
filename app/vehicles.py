@@ -188,14 +188,20 @@ def recent_vehicles():
         return jsonify(({"error": "Did not get vehicles. Not a GET request."}))
     
     try:
-        limit = int(request.args.get('limit'))
+        start_index = int(request.args.get('start_index'))
     except:
-        limit = 50
+        start_index = 1
+
+    try:
+        end_index = int(request.args.get('end_index'))
+    except:
+        end_index = 50
 
     cursor = get_db().cursor()
-    cursor.execute(("SELECT * FROM vehicles ORDER BY vehicle_id DESC"))
+    cursor.execute(("SELECT * FROM vehicles ORDER BY vehicle_id DESC LIMIT %s,%s"), 
+        (start_index-1, end_index-start_index+1,))
     columns = [col[0] for col in cursor.description]
-    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=limit)]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
     return jsonify({"success": head_rows})
 
 

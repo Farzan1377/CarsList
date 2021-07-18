@@ -131,17 +131,23 @@ def recent_posts():
         return jsonify(({"error": "Did not get recent posts. Not a GET request."}))
 
     try:
-        limit = int(request.args.get('limit'))
+        start_index = int(request.args.get('start_index'))
     except:
-        limit = 50
+        start_index = 1
+
+    try:
+        end_index = int(request.args.get('end_index'))
+    except:
+        end_index = 50
 
     cursor = get_db().cursor()
-    cursor.execute(("SELECT post_id, price, date_created, date_expires, b.* " \
-                    "FROM cs348.posts a INNER JOIN cs348.vehicles b ON a.vehicle_id=b.vehicle_id " \
-                    "ORDER BY date_created DESC " \
-                    "LIMIT 50"))
+    cursor.execute(("""
+        SELECT post_id, price, date_created, date_expires, b.*
+        FROM posts a INNER JOIN vehicles b ON a.vehicle_id=b.vehicle_id 
+        ORDER BY date_created DESC LIMIT %s,%s
+        """),(start_index-1, end_index-start_index+1,))
     columns = [col[0] for col in cursor.description]
-    head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=limit)]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
     return jsonify({"success": head_rows})
 
 
