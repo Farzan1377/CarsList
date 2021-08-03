@@ -36,7 +36,7 @@ CREATE_VEHICLE_TABLE = "CREATE TABLE vehicles (" \
                        ");"
 
 CREATE_POST_TABLE = "CREATE TABLE posts (" \
-                    "post_id INT NOT NULL, " \
+                    "post_id VARCHAR(255) NOT NULL, " \
                     "user_id VARCHAR(255) NOT NULL, " \
                     "vehicle_id VARCHAR(255) NOT NULL, " \
                     "price INT, " \
@@ -93,11 +93,12 @@ vehicles_df.rename(columns={'id': 'vehicle_id', 'login.uuid': 'user_id', 'condit
 vehicles_df.to_sql(name='vehicles', con=engine, schema='cs348', if_exists='append', index=False)
 
 print("Loading posts...")
-engine.execute("INSERT INTO posts VALUES (0, 'c5adf2f0-be01-4bc0-9ec9-17a364b7176e', '7301593436', 3000, " \
-                          "'2021-07-15 11:00:00', TIMESTAMPADD(DAY, 365, '2021-07-15 11:00:00'))")
-engine.execute("INSERT INTO posts VALUES (1, 'e44bbbd4-e83e-4518-9a5e-225471fd3755', '7301624019', 4000, " \
-                          "'2021-07-14 11:00:00', TIMESTAMPADD(DAY, 365, '2021-07-14 11:00:00'))")
-engine.execute("INSERT INTO posts VALUES (2, '066829f2-a67d-4b69-94b4-2b2490be8802', '7301630231', 5000, " \
-                          "CURRENT_TIMESTAMP, TIMESTAMPADD(DAY, 365, CURRENT_TIMESTAMP))")
+
+posts_df = pd.read_csv('postsData.csv',
+                          usecols=['post_id', 'user_id', 'vehicle_id', 'price'])
+posts_df.dropna(inplace=True)
+posts_df.rename(columns={'post_id': 'post_id', 'user_id': 'user_id', 'vehicle_id': 'vehicle_id', 'price': 'price'},
+                   inplace=True)
+posts_df.to_sql(name='posts', con=engine, schema='cs348', if_exists='append', index=False)
 
 print("Load complete!")
