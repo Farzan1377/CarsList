@@ -108,16 +108,21 @@ def get_post():
     if request.method != 'GET':
         return jsonify(({"error": "Did not get post. Not a GET request."}))
 
-    vehicle_id = request.args.get('vehicle_id')
-    if not vehicle_id:
-        user_id = request.args.get('user_id')
-        if not user_id:
-            return jsonify({'error': 'vehicle_id and user_id value not specified'})
-        cursor = get_db().cursor()
-        cursor.execute('SELECT * FROM posts where user_id = %s', (user_id,))
+    post_id = request.args.get('post_id')
+    if not post_id:
+        vehicle_id = request.args.get('vehicle_id')
+        if not vehicle_id:
+            user_id = request.args.get('user_id')
+            if not user_id:
+                return jsonify({'error': 'post_id, vehicle_id and user_id value not specified'})
+            cursor = get_db().cursor()
+            cursor.execute('SELECT * FROM posts where user_id = %s', (user_id,))
+        else:
+            cursor = get_db().cursor()
+            cursor.execute('SELECT * FROM posts where vehicle_id = %s', (vehicle_id,))
     else:
         cursor = get_db().cursor()
-        cursor.execute('SELECT * FROM posts where vehicle_id = %s', (vehicle_id,))
+        cursor.execute('SELECT * FROM posts where post_id = %s', (post_id,))
 
     columns = [col[0] for col in cursor.description]
     head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany()]
