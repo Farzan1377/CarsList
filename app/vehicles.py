@@ -5,6 +5,20 @@ from app.db import get_db
 bp = Blueprint('vehicles', __name__, url_prefix='/vehicles')
 
 
+@bp.route('/get_vehicle', methods=['GET'])
+def get_vehicle():
+    if request.method == 'GET':
+        vehicle_id = request.args.get('vehicle_id')
+        if not vehicle_id:
+            return jsonify({'error': 'vehicle_id value not specified'})
+        cursor = get_db().cursor()
+        cursor.execute("SELECT * FROM vehicles where vehicle_id = %s", (vehicle_id,))
+        columns = [col[0] for col in cursor.description]
+        head_rows = [dict(zip(columns, row)) for row in cursor.fetchmany(size=50)]
+
+        return jsonify({"success": head_rows})
+
+
 @bp.route('/get_user_vehicles', methods=['GET'])
 def get_user_vehicles():
     if request.method == 'GET':
