@@ -219,6 +219,32 @@ def recent_vehicles():
     return jsonify({"success": head_rows})
 
 
+@bp.route('select_vehicles', methods=['GET'])
+def select_vehicles():
+    if request.method != 'GET':
+        return jsonify(({"error": "Did not get recent vehicles. Not a GET request."}))
+
+    try:
+        start_index = int(request.args.get('start_index'))
+    except:
+        start_index = 1
+
+    try:
+        end_index = int(request.args.get('end_index'))
+    except:
+        end_index = 50
+
+    cursor = get_db().cursor()
+    cursor.execute(("""
+        SELECT *
+        FROM vehicles
+        ORDER BY vehicle_id DESC LIMIT %s,%s
+        """),(start_index-1, end_index-start_index+1,))
+    columns = [col[0] for col in cursor.description]
+    head_rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    return jsonify({"success": head_rows})
+
+
 @bp.after_request
 def apply_allow_origin(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
