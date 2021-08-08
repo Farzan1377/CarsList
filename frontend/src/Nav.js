@@ -8,14 +8,13 @@ function Nav() {
             <img className="CompanyLogo" src={companyLogo}/>
             </Link>
             
-            <ul className="navItems">
-                <Link to="/profile">
-                <li className="ProfilePicContainer">
+            <Link to="/profile">
+                <div className="ProfilePicContainer">
                     <img className="ProfilePic" src="https://randomuser.me/api/portraits/men/31.jpg"/>
-                </li>
-                </Link>
-                
-            </ul>
+                </div>
+            </Link>
+
+           
         </nav>
     )
 }

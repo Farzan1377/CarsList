@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  
+}
+
+.Font {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .App-logo {
@@ -37,6 +42,54 @@
   }
 }
 
+.Dropdowns {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.ManuDropButton button {
+  border-style: none;
+  background-color: rgb(246, 241, 241);
+  height: 50px;
+  width: 200px;
+  color: rgb(42, 129, 160);
+}
+
+.ManuDropButton #Manufacturer {
+  border-style: none;
+  background-color: rgb(246, 241, 241);
+  height: 50px;
+  color: rgb(42, 129, 160);
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.ManuDropButton #PriceHigh {
+  border-style: none;
+  background-color: rgb(246, 241, 241);
+  height: 50px;
+  color: rgb(42, 129, 160);
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.dropdown-menu {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  background-color: orange;
+  width: 100%;
+  text-decoration: none;
+  padding-bottom: 3px;
+  
+}
+
 .navBar {
   display: flex;
   justify-content: space-around;
@@ -55,7 +108,17 @@
 .Postings {
   width: 100vw;
   height: 100vh;
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.VehiclesSection {
+  width: 100vw;
+  height: 50vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .SinglePost {
@@ -63,9 +126,10 @@
 }
 
 .Post {
-  background-color: red;
-  width: 100px;
-  height: 100px;
+  
+  width: 200px;
+  height: 200px;
+  margin: 10px;
 }
 
 .PostImage {
@@ -99,4 +163,184 @@
 
 .CompanyLogo {
   width: 200px;
+}
+
+.Paging {
+  
+  height: 100px;
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  width: 20%;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: black;
+}
+
+.ProfileInfo {
+  color:rgb(149, 154, 155);
+  
+}
+
+.VehiclesTitle {
+  margin-top: 60px;
+}
+
+.CreatePostSection {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.CreatePostSection a {
+  text-decoration: none;
+}
+
+.CreatePostButton {
+  background-color: royalblue;
+  width: 140px;
+  height: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.CreatePostButton p {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+}
+
+.VehicleImage {
+  width: 250px;
+  border-radius: 5px;
+}
+
+.Vehicle {
+  height: max-content;
+  margin: 10px;
+  position: relative;
+}
+
+.VehicleEdit {
+  height: 60px;
+  width: 60px;
+  background-color: royalblue;
+  border-radius: 30px;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #fff;
+  position: absolute;
+  bottom: 1%;
+  left: 5%;
+  display: none;
+}
+
+.VehicleDelete {
+  height: 60px;
+  width: 60px;
+  background-color: royalblue;
+  border-radius: 30px;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #fff;
+  position: absolute;
+  bottom: 1%;
+  right: 5%;
+  display: none;
+  
+}
+
+.Vehicle:hover .VehicleDelete, .VehicleDelete:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.Vehicle:hover .VehicleEdit, .VehicleEdit:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.Logo {
+  max-width: 50%;
+  max-height: 50%;
+}
+
+.EditVehicleContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.EditVehicleContainer a {
+  text-decoration: none;
+}
+
+.VehicleInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+  height: 100px;
+  background-color: rgb(225, 225, 225);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.SmallContainer {
+  width: 65%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.VehicleInfoSmall {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(225, 225, 225);
+  width: 45%;
+  height: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+}
+
+.VehicleInfoSmall input {
+  height: 30px;
+}
+
+.LastContainer {
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.MakePostContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.MakePostContainer a {
+  text-decoration: none;
 }

@@ -1,17 +1,15 @@
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import carPlaceholder from './carPlaceholder.jpeg';
+import Image from './Image'
+function Post({ car }) {
 
-function Post() {
-    return (
-    
-        <Link to="/abc">
-        <div className="Post">
-        <img className="PostImage" src="https://images.craigslist.org/01212_6xRHfNWpFtGz_0CI0t2_600x450.jpg"/>
+  return (
+    <Link to={`id=${car.vehicle_id};${car.user_id}`}>
+      <div className="Post">
+        <Image src={car.image_url} className="PostImage" fallbackSource={carPlaceholder} />
       </div>
-        </Link>
-   
-    
-      
-    );
-  }
-  
+    </Link>
+  );
+}
+
 export default Post;
