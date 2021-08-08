@@ -209,4 +209,5 @@ def recent_vehicles():
 def apply_allow_origin(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = '*'
     return response
