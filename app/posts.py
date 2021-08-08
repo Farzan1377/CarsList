@@ -14,16 +14,31 @@ def create_post():
         return
     
     print('Attempting to create post...')
-    post_request = request.form
-    post_id = post_request["post_id"] if "post_id" in post_request else ""
-    user_id = post_request["user_id"] if "user_id" in post_request else ""
-    vehicle_id = post_request["vehicle_id"] if "vehicle_id" in post_request else ""
-    price = post_request["price"] if "price" in post_request else ""
-
+    post_request = request.args
+    if "post_id" in post_request:
+        post_id = post_request["post_id"]  
+    else:
+        return jsonify(({"error": "post_id is NULL"}))
+    if "user_id" in post_request:
+        user_id = post_request["user_id"]  
+    else:
+        return jsonify(({"error": "user_id is NULL"}))
+    if "vehicle_id" in post_request:
+        vehicle_id = post_request["vehicle_id"]  
+    else:
+        return jsonify(({"error": "vehicle_id is NULL"}))
+    if "price" in post_request:
+        price = post_request["price"] 
+    else:
+        return jsonify(({"error": "price is NULL"}))
     cursor = get_db().cursor()
     before_row_count = cursor.rowcount
-    rows = cursor.execute("""INSERT into posts values (%s,%s,%s,%s)""",
-                (post_id, user_id, vehicle_id, price,))
+    try:
+        rows = cursor.execute('INSERT into posts values (%s,%s,%s,%s,DEFAULT,DEFAULT)',
+                    (post_id, user_id, vehicle_id, price,))
+    except:
+        cursor.close()
+        return jsonify(({"error": "Could not insert post"}))
     after_row_count = cursor.rowcount
     get_db().commit()
     cursor.close()
