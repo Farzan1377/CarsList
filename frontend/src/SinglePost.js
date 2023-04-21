@@ -17,43 +17,41 @@ function SinglePost({match}) {
       .then(
         function (response) {
           if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
+            console.error('Looks like there was a problem. Status Code: ' +
               response.status)
             return
           }
 
           // Examine the text in the response
           response.json().then(function (data) {
-            console.log(data)
             setPoster(data.success[0])
           });
         }
       )
       .catch(function (err) {
-        console.log('Fetch Error :-S', err)
+        console.error('Fetch Error :-S', err)
       });
 
     fetch(`http://127.0.0.1:5000/vehicles/get_user_vehicles?user_id=${user_id}`)
       .then(
         function (response) {
           if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
+            console.error('Looks like there was a problem. Status Code: ' +
               response.status)
             return
           }
 
           // Examine the text in the response
           response.json().then(function (data) {
-            console.log(data)
             setPost(data.success[0])
           });
         }
       )
       .catch(function (err) {
-        console.log('Fetch Error :-S', err)
+        console.error('Fetch Error :-S', err)
       });
   }, [])
-    console.log(post)
+
     return (
       <div className="SinglePost">
         <h1>{post.manufacturer} {post.model} {post.year}</h1>
